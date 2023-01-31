@@ -40,6 +40,20 @@
 
     ];
 
+    $filteredArray = $hotels;
+    if(isset($_GET['vote']) && $_GET['vote'] !== ''){
+
+        $tempHotels = [];
+        foreach ($hotels as $hotel) {
+           if($hotel['vote'] >= $_GET['vote']){
+            $tempHotels [] = $hotel;
+           }
+        }
+
+        $filteredArray = $tempHotels;
+        
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,6 +67,32 @@
 </head>
 <body>
  <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>lista hotels</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form action="./index.php" method="GET" class="row my-3">
+                <div class="col-sm-4">
+                    <label class="control-label">vote</label>
+                    <input type="number" class="form-control" placeholder="vote" name="vote">
+                </div>
+                <div class="col-sm-4">
+                <label class="control-label">parking</label>
+                    <select class="form-control">
+                        <option value="">NO</option>
+                        <option value="">SI</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn-sm btn-primary">Filter</button>
+                    <button type="reset" class="btn-sm btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <table class="mt-3">
         <thead class=mx-3 >
             <th>NOME</th>
@@ -63,7 +103,7 @@
         </thead>
 
         <tbody>
-            <?php foreach($hotels as $hotel){ ?>
+            <?php foreach($filteredArray as $hotel){ ?>
 
                 <tr>
                     <td><?php echo $hotel['name'];  ?></td>
